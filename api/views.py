@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 # from rest_framework import viewsets
 from rest_framework import generics
 from reviews import models
@@ -10,14 +10,9 @@ class ProductList(generics.ListCreateAPIView):
     serializer_class=serializers.ProductSerializer
 
 class ReviewList(generics.ListCreateAPIView):
-    queryset=models.feedback.objects.all()
     serializer_class= serializers.RatingSerializer
-
-# class feedbackViewSet(viewsets.ModelViewSet):
-#     queryset= models.feedback.objects.all()
-#     serializer_class=serializers.RatingSerializer
-
-# class productViewSet(viewsets.ModelViewSet):
-#     queryset= models.product.objects.all()
-#     serializer_class=serializers.ProductSerializer
+    def get_queryset(self):
+        token = self.kwargs['number']
+        query_set= models.feedback.objects.filter(item=token)
+        return query_set
 

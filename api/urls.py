@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from . import views
 from rest_framework.routers import DefaultRouter
 
@@ -11,5 +11,6 @@ from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     path('',views.ProductList.as_view()),
-    path('<int:pk>/', views.ReviewList.as_view()),
+    re_path('(?P<number>.+)/', views.ReviewList.as_view()),
+    
 ]
